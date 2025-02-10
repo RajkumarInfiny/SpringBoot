@@ -37,4 +37,13 @@ public class GlobalExceptionHadler {
         return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.BAD_REQUEST);
         }
 
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<ResponseStructure<String>> handleRuntimeException(RuntimeException ex) {
+		ResponseStructure<String> structure = new ResponseStructure<String>();
+		structure.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		structure.setMessage(ex.getMessage());
+		structure.setData(null);
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.BAD_REQUEST);
+	}
+
 }

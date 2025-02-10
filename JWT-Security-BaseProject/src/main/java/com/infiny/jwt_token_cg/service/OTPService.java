@@ -13,6 +13,9 @@ public class OTPService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private EmailService mailService;
+
     public String generateOTP() {
         Random random = new Random();
         int otp = 100000 + random.nextInt(900000);
@@ -21,9 +24,13 @@ public class OTPService {
 
     public void sendOTP(String email, String otp) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(email);
-        message.setSubject("Your OTP for Registration");
-        message.setText("Your OTP is: " + otp);
-        mailSender.send(message);
+        //       ========== old Jwt-Security-base code========
+//        message.setTo(email);
+//        message.setSubject("Your OTP for Registration");
+//        message.setText("Your OTP is: " + otp);
+//        mailSender.send(message);
+
+        // new code written for forgot-password project
+        mailService.sendEmail(email,"Your OTP for Registration","Your OTP is: " + otp);
     }
 }
